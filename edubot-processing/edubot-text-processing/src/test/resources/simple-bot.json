@@ -1,0 +1,20 @@
+{
+  "intents":
+  [
+    {
+      "code":0,
+      "label":"default",
+      "texts":[{"text":"${_name} said « ${_text} »."}]
+    },
+    {
+      "code":1,
+      "label":"connect",
+      "texts":[{"text":"hello! how can i help you?"}]
+    },
+    {
+      "code":2,
+      "label":"disconnect",
+      "texts":[{"text":"bye bye."}]
+    }
+  ]
+}

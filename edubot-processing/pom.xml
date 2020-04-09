@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>io.sloi.edubot</groupId>
+    <artifactId>edubot</artifactId>
+    <version>0.1-0</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.sloi.edubot</groupId>
+  <artifactId>edubot-processing</artifactId>
+  <version>0.1-0</version>
+  <name>eduBot Processing</name>
+  <packaging>pom</packaging>
+  <properties>
+    <encoding>UTF-8</encoding>
+  </properties>
+  <modules>
+    <module>edubot-text-processing</module>
+    <module>edubot-speech-processing</module>
+    <module>edubot-chat-processing</module>
+  </modules>
+</project>
