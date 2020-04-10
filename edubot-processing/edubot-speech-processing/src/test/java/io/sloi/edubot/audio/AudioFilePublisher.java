@@ -2,6 +2,7 @@ package io.sloi.edubot.audio;
 
 import java.io.InputStream;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
@@ -39,10 +40,12 @@ public class AudioFilePublisher {
 	}
 	
 	public void doProcess(String sample, int round, int size, InputStream inputStream) throws Exception {
-		client.publish(META_TOPIC, ("start").getBytes(), 1, false);
-		long started = System.currentTimeMillis();
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
-		int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
+		AudioFormat audioFormat = audioInputStream.getFormat();
+		String format = this.getAudioFormat(audioFormat);
+		int bytesPerFrame = audioFormat.getFrameSize();
+		client.publish(META_TOPIC, ("start " + format).getBytes(), 1, false);
+		long started = System.currentTimeMillis();
 		int numBytes = size * bytesPerFrame; 
 		byte[] audioBytes = new byte[numBytes];
 		int numBytesRead = -1;
@@ -55,6 +58,24 @@ public class AudioFilePublisher {
 		long stopped = System.currentTimeMillis();
 		System.out.println("[pub]\t" + sample + "\t" + size + "\t" + round + "\t" + countLoop + "\t" + (stopped - started));
 		client.publish(META_TOPIC, "stop".getBytes(), 1, false);
+	}
+
+	private String getAudioFormat(AudioFormat format) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(format.getEncoding().toString());
+		buffer.append(' ');
+		buffer.append(format.getSampleRate());
+		buffer.append(' ');
+		buffer.append(format.getSampleSizeInBits());
+		buffer.append(' ');
+		buffer.append(format.getChannels());
+		buffer.append(' ');
+		buffer.append(format.getFrameSize());
+		buffer.append(' ');
+		buffer.append(format.getFrameRate());
+		buffer.append(' ');
+		buffer.append(format.isBigEndian());
+		return buffer.toString();
 	}
 
 	public static void main(String[] arguments) throws Exception {
